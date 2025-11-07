@@ -2,151 +2,212 @@
 
 ## Overview
 
-The VTS (Vacation Tracking System) is a comprehensive workflow management system designed to handle employee vacation requests and manager approval processes. This system streamlines the request submission and approval workflow with clear process flows and role-based interactions.
+The Vacation Tracking System (VTS) is a workflow application that streamlines vacation request submission and manager approval. It provides clear process flows, role-based permissions, auditability, and integrations with internal systems.
 
 ## Project Structure
 
 ```
 VTS/
-├── #01 Sequence Employee submits a new request.svg
-├── #02 Sequence Manager approval flow.svg
-├── VTS_Flow_chart.svg
-├── Untitled Diagram.drawio
-├── VTS .pdf
-└── README.md
+├── README.md
+├── VTS_ERD.jpg
+├── session_01/
+│   ├── 01_Sequence_Employee.svg
+│   ├── 02_Sequence_Manager.svg
+│   ├── VTS.pdf
+│   └── VTS_Flow_chart.svg
+└── session_02/
+    ├── UI of Requests (Employee).png
+    └── UI of Requests (Manager).png
 ```
 
-## Files Description
+## Sessions
 
-### Diagrams and Documentation
+### Session 01: Diagrams & Documents
 
-| File | Type | Description |
-|------|------|-------------|
-| `#01 Sequence Employee submits a new request.svg` | Sequence Diagram | Illustrates the complete workflow when an employee submits a new vacation request |
-| `#02 Sequence Manager approval flow.svg` | Sequence Diagram | Shows the manager's approval process and decision flow |
-| `VTS_Flow_chart.svg` | Flow Chart | Overall system flow chart depicting the entire VTS process |
-| `Untitled Diagram.drawio` | Draw.io Source | Editable diagram source file for modifications |
-| `VTS .pdf` | PDF Document | Complete documentation and specification document |
+- Entity-Relationship Diagram (ERD)
+  ![VTS ERD](./VTS_ERD.jpg)
 
-## System Workflows
+- Sequence: Employee submits a new request
+  ![Sequence: Employee](./session_01/01_Sequence_Employee.svg)
 
-### 1. Employee Request Submission Flow
+- Sequence: Manager approval flow
+  ![Sequence: Manager](./session_01/02_Sequence_Manager.svg)
 
-The employee request submission process is documented in the sequence diagram below:
+- System flow chart
+  ![VTS Flow Chart](./session_01/VTS_Flow_chart.svg)
 
-![Employee Request Submission](./#01%20Sequence%20Employee%20submits%20a%20new%20request.svg)
+- Session 01 PDF: [Open Document](./session_01/VTS.pdf)
 
-**Key Steps:**
-- Employee initiates a vacation request
-- System validates the request
-- Request is submitted to the approval queue
-- Employee receives confirmation
+#### Summary from Session 01 (PDF)
 
-### 2. Manager Approval Flow
+- Vision:
 
-The manager approval process is illustrated in this sequence diagram:
+  1. Develop and deploy a flexible vacation time management application for managers and employees.
+  2. VTS enables employees to manage vacation, sick leave, and personal time off without needing expertise in company or local leave policies.
 
-![Manager Approval Flow](./#02%20Sequence%20Manager%20approval%20flow.svg)
+- Function:
 
-**Key Steps:**
-- Manager receives notification of pending requests
-- Manager reviews request details
-- Manager makes approval/rejection decision
-- System updates request status
-- Employee receives notification of decision
+  1. Manager Approval: Enables manager approval (optional).
+  2. Request Access Range: Access previous calendar year requests and submit requests up to 18 months in the future.
+  3. Email Notifications: Notify managers for approvals and employees for status changes.
+  4. HR and System Admin Overrides: Allow overrides with logging by HR and system administration.
+  5. Manager Awarding Personal Leave: Managers can award personal leave time with system-set limits.
+  6. Web Service Interface: Internal systems can query an employee’s vacation request summary.
 
-### 3. Complete System Flow Chart
+- Non-Functional:
 
-The overall system architecture and process flow:
+  1. The app must be a web application.
+  2. Manager approval is optional.
 
-![VTS Flow Chart](./VTS_Flow_chart.svg)
+- Constraints:
 
-## Features
+  1. Consider existing and proposed systems context.
+  2. Deliver functionality as a web application.
+  3. Use existing hardware and middleware.
+  4. Extend the intranet portal, using single-sign-on (SSO) for authentication.
+  5. Keep activity logs for all transactions.
+  6. Interface with HR legacy systems to retrieve and update employee information.
 
-- **Employee Self-Service**: Employees can submit vacation requests independently
-- **Manager Dashboard**: Centralized view for managers to review and process requests
-- **Automated Notifications**: Real-time updates for both employees and managers
-- **Request Tracking**: Complete audit trail of all requests and decisions
-- **Workflow Automation**: Streamlined approval process with defined stages
+- Domain:
+  Leave management is currently manual, causing delays, errors, and extra HR workload.
 
-## Workflow States
+- Pseudocode:
 
-1. **Draft** - Request being prepared by employee
-2. **Submitted** - Request sent for approval
-3. **Pending Review** - Awaiting manager action
-4. **Approved** - Request approved by manager
-5. **Rejected** - Request declined by manager
-6. **Cancelled** - Request withdrawn by employee
+```
+START
+● Employee logs into the internal portal
+● Display balances: previous 6 months and up to 18 months ahead
+IF employee wants to create a new request
+  IF balance > 0
+    Enter title, description, time, and date
+    IF data is valid
+      Return to the new page
+      IF manager approval needed
+        Send notification to manager for approval
+        Set state = pending approval
+    ELSE
+      Set state = pending approval
+      Show error message
+      Correct data or cancel request
 
-## Roles and Permissions
+IF manager
+  ● Manager clicks the email link OR logs into the portal
+  ● Homepage shows manager’s leave requests and a section for pending approvals
+  ● Manager reviews each request to approve or deny
+  ● Show details of requested time
+  IF accepted
+    Change state
+  ELSE
+    Enter explanation
+    Change state
+  ● Send email notification to the employee
+```
 
-### Employee
-- Submit new vacation requests
-- View own request history
-- Edit draft requests
-- Cancel submitted requests (before approval)
-- Receive notifications on request status
+- Actors:
+  1. Employee: Primary user to manage vacation time.
+  2. Manager: Has employee capabilities plus approves subordinates’ vacation requests and may award comp time within limits.
+  3. Clerk (HR): Can view and maintain employee data; can add/remove records; may use separate login IDs when also an employee.
+  4. System Admin: Ensures smooth operation of technical resources and manages log files.
 
-### Manager
-- View all team member requests
-- Approve or reject pending requests
-- Add comments/notes to requests
-- View team vacation calendar
-- Receive notifications for new requests
+### Session 02: User Interfaces
 
-## Getting Started
+- Employee Requests UI
+  ![UI: Employee Requests](<./session_02/UI%20of%20Requests%20(Employee).png>)
 
-### Prerequisites
-- Access to the VTS system
-- Valid employee or manager credentials
-- Network connectivity to the application server
+- Manager Requests UI
+  ![UI: Manager Requests](<./session_02/UI%20of%20Requests%20(Manager).png>)
 
-### For Employees
-1. Log in to the VTS system
-2. Navigate to "New Request"
-3. Fill in the vacation request form
-4. Submit for approval
-5. Monitor request status in your dashboard
+## What if we need to have in the future another status like HR_Pending, HR_Approval with minimum change?
 
-### For Managers
-1. Log in to the VTS system
-2. Access the "Pending Approvals" section
-3. Review request details
-4. Approve or reject with optional comments
-5. Track team vacation schedule
+- Add HrID to the VacationRequest Table
+- Add these two statuses to the status Enum
 
-## Documentation
+## Pseudocode For Withdraw Request:
 
-For detailed system documentation, please refer to:
-- [Complete VTS Documentation](./VTS%20.pdf)
+```
+START
+  function withdrawRequest(request) {
+    if(request.status === 'Pending') {
+      var confirmWithdraw = showConfirm("Confirm Message")
+      if(confirmWithdraw) {
+        updateRequest(request)
+        sendEmailToManager(managerID, Message)
+      }
+    }
+  }
 
-## Diagrams
+  function updateRequest(request) {
+   // Code to send email to manager
+  }
 
-All system diagrams are available in SVG format for high-quality viewing:
-- [Employee Request Flow](./#01%20Sequence%20Employee%20submits%20a%20new%20request.svg)
-- [Manager Approval Flow](./#02%20Sequence%20Manager%20approval%20flow.svg)
-- [System Flow Chart](./VTS_Flow_chart.svg)
+  function sendEmailToManager(managerID, message) {
+    // Code to send email to manager
+  }
 
-## Editing Diagrams
+  function showConfirm(message) {
+    // Code to show confirm dialog
+  }
+```
 
-The source diagrams can be edited using Draw.io:
-1. Open [Draw.io](https://app.diagrams.net/)
-2. Import the `Untitled Diagram.drawio` file
-3. Make your modifications
-4. Export as SVG or PNG as needed
+## Pseudocode For Cancel Approved Request:
 
-## Support and Maintenance
+```
+START
+  function CancelRequest(request) {
+      if(request.status === 'Approved') {
+        var confirmCancel = showConfirm("Confirm Message")
+        if(request === in the future) {
+          confirmCancel = showConfirm("Confirm Message")
+          if(confirmCancel) {
+            updateRequest(request)
+            sendEmailToEmployee(employeeID, "Message")
+          }
+        } else if (request === in the recent past (pre vious 5 business days)) {
+          confirmCancel = showConfirm("Confirm Message")
+          var enterExplanation = enterMessage("Enter Explanation")
+          if(confirmCancel) {
+            updateRequest(request)
+            sendEmailToEmployee(employeeID, "Message")
+          }
+        }
 
-For system support or to report issues, please contact your system administrator.
+        ReturnBalanceToEmployee(employeeID, request.balance)
+    }
+  }
 
-## Version History
+  function ReturnBalanceToEmployee(employeeID, balance) {
+    // Code to return balance to employee
+  }
 
-- **v1.0** - Initial system design and documentation
+    function showConfirm(message) {
+    // Code to show confirm dialog
+  }
 
-## License
+  function enterMessage(message) {
+    // Code to show enter dialog
+  }
 
-Copyright © 2024. All rights reserved.
+  function updateRequest(request) {
+    // Code to update request
+  }
 
----
+  function sendEmailToEmployee(employeeID, message) {
+    // Code to send email to employee
+  }
+```
 
-**Last Updated**: November 2024
+## Pseudocode For Edit Pending Request:
+
+```
+START
+  function editPendingRequest(request) {
+    if(request.status === 'Pending') {
+      changeRequest(request)
+    }
+  }
+
+  function changeRequest(request) {
+   // Code to send email to manager
+   // change title, comments or dates
+  }
+```
