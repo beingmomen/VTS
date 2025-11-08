@@ -211,3 +211,31 @@ START
    // change title, comments or dates
   }
 ```
+
+## State Diagram
+
+![UI: Employee Requests](./session_02/state_machine_diagram.svg)
+
+## Sequence Diagram – Withdraw Request
+
+![UI: Employee Requests](./session_02/withdraw_request_sequence_diagram.svg)
+
+## Sequence Diagram – Cancel Approved Request
+
+![UI: Employee Requests](./session_02/cancel_approved_request_sequence_diagram.svg)
+
+## Sequence Diagram – Edit Pending Request
+
+![UI: Employee Requests](./session_02/edit_pending_request_sequence_diagram.svg)
+
+## Flowchart – Withdraw Request
+
+![UI: Employee Requests](./session_02/withdraw_request_flowchart.svg)
+
+## Flowchart – Cancel Approved Request
+
+![UI: Employee Requests](./session_02/cancel_approved_request_flowchart.svg)
+
+## Flowchart – Edit Pending Request
+
+![UI: Employee Requests](./session_02/edit_pending_request_flowchart.svg)
